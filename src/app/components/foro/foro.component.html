@@ -2,48 +2,28 @@
   <img src="/assets/icon/c-28b93bf742.webp" class="img-fluid" style="position: absolute; right: 0; top: 0; z-index: -100; WIDTH:100%; height: 100%;">
   
   <a #topOfPage href="#topOfPage"></a>
+
   <ion-card-content class="login ion-fade-in-up ion-animatable">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Ingresa tu publicación</ion-card-title>
-      </ion-card-header>
-
-      <ion-item class="ion-padding-horizontal">
+        <h4>Ingresa tu publicación</h4>
         <ion-input [(ngModel)]="publicacion.titulo" label="Título" labelPlacement="floating"></ion-input>
-      </ion-item>
-
-      <ion-item class="ion-padding-horizontal">
         <ion-textarea [(ngModel)]="publicacion.contenido" label="Contenido" labelPlacement="floating"></ion-textarea>
-      </ion-item>
     
-      <div class="alinear-centro">
         <ion-button (click)="limpiarPublicacion()">Limpiar</ion-button>
         <ion-button (click)="guardarPublicacion()">Guardar</ion-button>
-      </div>
-
-    </ion-card>
   </ion-card-content>
 
-  
-  <ion-card class="sin-bordes">
-    <ion-card-title class="con-padding-top">Publicaciones recientes</ion-card-title>
-  </ion-card>
+  <ion-card-content class="login ion-fade-in-up ion-animatable">
+    <h4>Publicaciones recientes<h4>
 
-  <ion-card *ngFor="let pub of publicaciones">
-
-    <ion-card-header>
-      <h4>
-        #{{ pub.id }}: {{ pub.titulo }} <br>
-        Autor: {{ pub.nombre }} {{ pub.apellido }}
-      </h4>
-      
-    </ion-card-header>
+    <ion-card *ngFor="let pub of publicaciones">
+        <h4>
+          #{{ pub.id }}: {{ pub.titulo }} <br>
+          Autor: {{ pub.nombre }} {{ pub.apellido }}
+        </h4>
+    <br>
   
-    <ion-card-content>
       {{ pub.contenido }}
-    </ion-card-content>
 
-    <div class="alinear-derecha">
       <ion-button (click)="editarPublicacion(pub)">
         <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
       </ion-button>
@@ -51,8 +31,4 @@
       <ion-button (click)="eliminarPublicacion(pub)">
         <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
       </ion-button>
-    </div>
 
-  </ion-card>
-
-</ion-content>
