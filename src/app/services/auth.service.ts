@@ -105,9 +105,7 @@ export class AuthService {
   }
 
   private esRespuestaCorrecta(respuestaSecreta: string): boolean {
-    // Implementa la lógica para verificar si la respuesta es correcta.
-    // Por ejemplo, puedes comparar la respuesta con una respuesta esperada.
-    const respuestaEsperada = "gato"; // Cambia esto a tu respuesta esperada
+    const respuestaEsperada = "gato"; 
   
     // Devuelve true si la respuesta es correcta, de lo contrario, devuelve false
     return respuestaSecreta === respuestaEsperada;
