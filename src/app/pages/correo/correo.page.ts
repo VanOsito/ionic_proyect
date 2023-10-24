@@ -5,6 +5,8 @@ import { IonicModule } from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataBaseService } from 'src/app/services/data-base.service';
+import { Usuario } from 'src/app/model/usuario';
 
 @Component({
   selector: 'app-correo',
@@ -15,15 +17,31 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class CorreoPage implements OnInit {
 
-  correo = 'atorres@duocuc.cl';
+  correo = '';
 
-  constructor(private router: Router, private alertController: AlertController, private authService: AuthService) { }
+  constructor(private router: Router, private bd: DataBaseService , private authService: AuthService) { }
 
   ngOnInit() {
   }
 
-  recuperarContrasena() {
-    this.authService.verificacionCorreo(this.correo);
+  async recuperarContrasena() {
+    const usu=await this.bd.leerUsuario(this.correo);
+    if (usu == undefined){
+    this.router.navigate(['/incorrecto']);
+  }else{
+    this.router.navigate(['/pregunta']);
+    if (!usu) {
+      this.router.navigate(['/incorrecto']);
+    } else {
+      const navigationExtras: NavigationExtras = {
+        state: {
+          usuario: usu
+        }
+      };
+      this.router.navigate(['/pregunta'], navigationExtras);
+    }
+  }
+  
   }
 
   volverAlInicio() {
