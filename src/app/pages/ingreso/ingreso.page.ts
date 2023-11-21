@@ -14,8 +14,8 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class IngresoPage implements OnInit {
 
-  correo = 'atorres@duocuc.cl';
-  password = '1234';
+  correo = '';
+  password = '';
 
   constructor(private authService: AuthService, private router: Router) { }
 
@@ -29,5 +29,9 @@ export class IngresoPage implements OnInit {
   contrasena(){
     this.router.navigate(['/correo']);
     
+  }
+
+  registro(){
+    this.router.navigate(['/registrarme']);
   }
 }
