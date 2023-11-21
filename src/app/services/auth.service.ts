@@ -10,14 +10,17 @@ import { DataBaseService } from './data-base.service';
 @Injectable()
 
 export class AuthService {
-
+  
   keyUsuario = 'USUARIO_AUTENTICADO';
   usuarioAutenticado = new BehaviorSubject<Usuario | null>(null);
+  esAdministrador: boolean;
 
   private contraseñaSubject = new BehaviorSubject<string>('');
   contraseña$ = this.contraseñaSubject.asObservable() //pregunta
 
-  constructor(private router: Router, private bd: DataBaseService, private storage: Storage) { }
+  constructor(private router: Router, private bd: DataBaseService, private storage: Storage) {
+    this.esAdministrador = false;
+   }
 
   inicializarAutenticacion() {
     this.storage.create();
