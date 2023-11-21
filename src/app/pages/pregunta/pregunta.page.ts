@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { Usuario } from 'src/app/model/usuario';
 
 @Component({
   selector: 'app-pregunta',
@@ -14,19 +15,44 @@ import { AuthService } from 'src/app/services/auth.service';
   imports: [IonicModule, CommonModule, FormsModule]
 })
 export class PreguntaPage implements OnInit {
-
-  nombre = 'Anna'
-  preguntaSecreta = '¿Cuál es tu animal favorito?'
-  respuestaSecreta = 'gato'
+  usu = new Usuario ();
+  respuestaSecreta = ''
+  preguntaSecreta=''
+  nombre=''
+  apellido =''
 
   constructor(private router: Router, private alertController: AlertController, private authService: AuthService) { }
 
   ngOnInit() {
+    const nav = this.router.getCurrentNavigation();
+    if (nav) {
+      if (nav.extras.state) {
+        this.usu = nav.extras.state['usuario'];
+        console.log(this.usu)
+        this.preguntaSecreta=this.usu.preguntaSecreta;
+        this.nombre=this.usu.nombre;
+        this.apellido=this.usu.apellido;
+
+        console.log(this.usu.toString());
+        return;
+      }
+    }
   }
+  
+
 
   recuperarContrasena(){
-    this.authService.verificacionRespuesta(this.respuestaSecreta);
+    if (this.usu === undefined){
+    }else{
+      if(this.usu.respuestaSecreta==this.respuestaSecreta){
+        this.router.navigate(['/correcto']);
+        this.authService.transmitirContraseña(this.usu.password);
 
+      }else{
+        this.router.navigate(['/incorrecto']);
+      }
+    }
+    
   }
 
   volverAlInicio(){

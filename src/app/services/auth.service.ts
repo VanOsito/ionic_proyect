@@ -14,6 +14,9 @@ export class AuthService {
   keyUsuario = 'USUARIO_AUTENTICADO';
   usuarioAutenticado = new BehaviorSubject<Usuario | null>(null);
 
+  private contraseñaSubject = new BehaviorSubject<string>('');
+  contraseña$ = this.contraseñaSubject.asObservable() //pregunta
+
   constructor(private router: Router, private bd: DataBaseService, private storage: Storage) { }
 
   inicializarAutenticacion() {
@@ -75,45 +78,12 @@ export class AuthService {
     this.usuarioAutenticado.next(usuario);
   }
 
-  async verificacionCorreo(correo: string) {
-    // Verificar si el correo es válido
-    if (!this.isValidEmail(correo)) {
-      showToast('La dirección de correo electrónico no es válida');
-      return;
-    }
 
-    // Redirige a la página de "pregunta"
-    this.router.navigate(['pregunta']);
-  }
-
-  // Función de verificación de correo electrónico
-  private isValidEmail(email: string): boolean {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    return emailRegex.test(email);
+  transmitirContraseña(contraseña: string) {
+    this.contraseñaSubject.next(contraseña);
   }
 
 
-  async verificacionRespuesta(respuestaSecreta: string) {
-    // Verifica si la respuesta es correcta
-    if (this.esRespuestaCorrecta(respuestaSecreta)) {
-      // Redirige a la página "correcto"
-      this.router.navigate(['/correcto']);
-    } else {
-      // Redirige a la página "incorrecto"
-      this.router.navigate(['/incorrecto']);
-    }
-  }
-
-  private esRespuestaCorrecta(respuestaSecreta: string): boolean {
-    // Implementa la lógica para verificar si la respuesta es correcta.
-    // Por ejemplo, puedes comparar la respuesta con una respuesta esperada.
-    const respuestaEsperada = "respuestaCorrecta"; // Cambia esto a tu respuesta esperada
-  
-    // Devuelve true si la respuesta es correcta, de lo contrario, devuelve false
-    return respuestaSecreta === respuestaEsperada;
-  }
-  
-  
 }
 
 
