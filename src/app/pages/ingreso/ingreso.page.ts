@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { showToast } from 'src/app/tools/message-routines';
 
 @Component({
   selector: 'app-ingreso',
@@ -23,6 +24,7 @@ export class IngresoPage implements OnInit {
   }
 
   ingresar() {
+    showToast('click boton ingresar')
     this.authService.login(this.correo, this.password);
   }
 
