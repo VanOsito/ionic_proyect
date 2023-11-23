@@ -56,16 +56,37 @@ describe('Verificar mi aplicacion', () => {
         cy.wait(1500);
         cy.get('#contenido').type('Contenido Prueba'),{delay: 100}
         cy.wait(1500);
-        // falta completar el guardar datos
+        cy.contains('Guardar').click();
+        cy.wait(1500);
+        cy.contains('Aceptar').click();
+        cy.wait(1500);
         cy.contains('Cerrar sesión').click();
       });
     });
   });
 
 
-// agregar "borrar la publicacion"
+  it('verificar borrar publicacion', () => {
+    cy.wait(1500);
+    cy.visit('localhost:8100').then(() => {
+      cy.wait(1500);
+      cy.get('#correo').type('atorres@duocuc.cl'), {delay: 100}
+      cy.wait(1500);
+      cy.get('#password').type('1234'),{delay: 100}
+      cy.wait(1500);
+      cy.contains('Ingresar').click();
+      cy.intercept('/inicio').as('route').then(() => {
+        cy.wait(1500);
+        cy.get('#Foro').click();
+        cy.wait(1500);
+        cy.get('ion-card:first-child ion-button[data-testid="eliminar-btn"]').click();
+        cy.wait(1500);
+        cy.contains('Aceptar').click();
+        cy.contains('Cerrar sesión').click();
+      });
+    });
+  });
 
-// agregar "validacion de datos de mis datos"
 
 it('verificar actualizar "mis datos"', () => {
   cy.wait(1500);
@@ -80,19 +101,24 @@ it('verificar actualizar "mis datos"', () => {
       cy.wait(1500);
       cy.get('#misdatos').click();
       cy.wait(1500);
-      cy.get('#nombre').invoke('val','Paula'),{delay: 100}
+      cy.get('#nombre').invoke('val','Paul'),{delay: 100}
+      cy.get('#nombre').type('a')
       cy.wait(1500);
-      cy.get('#apellido').invoke('val','López'),{delay: 100}
+      cy.get('#apellido').invoke('val','Lópe'),{delay: 100}
+      cy.get('#apellido').type('z')
       cy.wait(1500);
-      cy.get('#correo2').invoke('val','plopez@duocuc.cl'),{delay: 100}
+      cy.get('#correo2').invoke('val','plopez@duocuc.c'),{delay: 100}
+      cy.get('#correo2').type('l')
       cy.wait(1500);
-      cy.get('#preguntasecreta').invoke('val','nombre de mi mamá'),{delay: 100}
+      cy.get('#preguntasecreta').invoke('val','nombre de mi mam'),{delay: 100}
+      cy.get('#preguntasecreta').type('á')
       cy.wait(1500);
-      cy.get('#respuestasecreta').invoke('val','Sandra'),{delay: 100}
+      cy.get('#respuestasecreta').invoke('val','Sandr'),{delay: 100}
+      cy.get('#respuestasecreta').type('a')
       cy.wait(1500);
-      cy.get('#contraseña').invoke('val','4321'),{delay: 100}
+      cy.get('#contraseña').type('4321'),{delay: 100}
       cy.wait(1500);
-      cy.get('#repetircontraseña').invoke('val','4321'),{delay: 100}
+      cy.get('#repetircontraseña').type('4321'),{delay: 100}
       cy.wait(1500);
       cy.contains('Actualizar mis datos')
       cy.wait(1500);
@@ -104,7 +130,7 @@ it('verificar actualizar "mis datos"', () => {
   });
 });
 
-
+// falta solo "validacion de datos de mis datos"
 
 
 
