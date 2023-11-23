@@ -5,8 +5,8 @@
 
   <ion-card-content class="login ion-fade-in-up ion-animatable">
         <h4>Ingresa tu publicación</h4>
-        <ion-input [(ngModel)]="publicacion.titulo" label="Título" labelPlacement="floating"></ion-input>
-        <ion-textarea [(ngModel)]="publicacion.contenido" label="Contenido" labelPlacement="floating"></ion-textarea>
+        <ion-input style="color: black;" [(ngModel)]="publicacion.titulo" id="titulo" label="Título" labelPlacement="floating"></ion-input>
+        <ion-textarea style="color: black;" [(ngModel)]="publicacion.contenido" id="contenido" label="Contenido" labelPlacement="floating"></ion-textarea>
     
         <ion-button (click)="limpiarPublicacion()">Limpiar</ion-button>
         <ion-button (click)="guardarPublicacion()">Guardar</ion-button>

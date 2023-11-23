@@ -7,16 +7,16 @@
   <br>
   <ion-toolbar>
     <ion-segment [(ngModel)]="componente_actual" (ngModelChange)="cambiarComponente($event)">
-      <ion-segment-button value="qr">
+      <ion-segment-button id="qr" value="qr">
         <ion-label>QR</ion-label>
       </ion-segment-button>
       <ion-segment-button value="miclase">
         <ion-label>Mi clase</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="foro">
-        <ion-label>Foro</ion-label>
+      <ion-segment-button class="clickable-label" id="Foro" value="foro">
+        <ion-label  >Foro</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="misdatos">
+      <ion-segment-button class="clickable-label" id="misdatos" value="misdatos">
         <ion-label>Mis datos</ion-label>
       </ion-segment-button>
     </ion-segment>
@@ -26,7 +26,7 @@
 <ion-content>
   <app-qr [hidden]="componente_actual !== 'qr'" (qrCapturado)="cambiarComponente('miclase')"></app-qr>
   <app-miclase [hidden]="componente_actual !== 'miclase'"></app-miclase>
-  <app-foro [hidden]="componente_actual !== 'foro'"></app-foro>
+  <app-foro [hidden]="componente_actual !== 'foro'"  ></app-foro>
   <app-misdatos [hidden]="componente_actual !== 'misdatos'"></app-misdatos>
 </ion-content>
 
