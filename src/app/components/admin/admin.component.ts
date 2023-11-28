@@ -5,7 +5,9 @@ import { IonicModule, ViewWillEnter } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from 'src/app/model/usuario';
-import { Router } from '@angular/router';
+import { showAlertDUOC, showAlertError, showAlertYesNoDUOC } from 'src/app/tools/message-routines';
+import { APIClientService, Publicacion } from 'src/app/services/apiclient.service';
+import { MessageEnum } from 'src/app/tools/message-enum';
 
 
 @Component({
@@ -16,24 +18,48 @@ import { Router } from '@angular/router';
   standalone: true,
 })
 export class AdminComponent  implements OnInit {
-  usuario = new Usuario
-  nombre: string=''
-  apellido: string= ''
-  correo: string=''
-  repeticionPassword = '';
-  constructor(private authService: AuthService, private bd: DataBaseService) {}
+  usuarios: Usuario[] = [];
+  usuario: Usuario | null = null ;
+  constructor(private authService: AuthService, private bd: DataBaseService,  private api: APIClientService) {}
 
 
-  ngOnInit() {
+  async ngOnInit() {
+
     this.authService.usuarioAutenticado.subscribe((usuario) => {
       if (usuario !== null) {
-        this.usuario = usuario!;
-        this.repeticionPassword = usuario!.password;
+        this.usuario = usuario;
       }
-    })
+    });
+    
 
+    this.bd.traerListaUsuarios()
+    .then((usuarios) => {
+      this.usuarios = usuarios;
+    });
+    
     
   }
+
+  filtrarUsuarioEnSesion(): Usuario[] {
+    return this.usuarios.filter(usuario => usuario.correo !== 'admin');
+  }
+
+  async eliminarUsuario(usuario: Usuario) {
+    const usu = await this.bd.leerUsuario(usuario.correo);
+    if(usu){
+      const resp= await showAlertYesNoDUOC('¿Estas seguro que deseas eliminar este usuario ${usu.nombre}? ');
+      if (resp == MessageEnum.YES){
+        await this.bd.eliminarUsuarioUsandoCorreo(usuario.correo);
+
+        this.usuarios == this.usuarios.filter( u => u.correo !== usuario.correo);
+      }
+    }else{
+      showAlertDUOC('El usuario que desea eliminar no existe')
+    }
+
+  }
+
+  
 
     
     

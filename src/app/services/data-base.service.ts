@@ -52,7 +52,7 @@ export class DataBaseService {
     await this.guardarUsuario(Usuario.getUsuario('atorres@duocuc.cl', '1234', 'Ana', 'Torres', 'Nombre de mi mascota', 'gato', 'N'));
     await this.guardarUsuario(Usuario.getUsuario('avalenzuela@duocuc.cl', 'qwer', 'Alberto', 'Valenzuela', 'Mi mejor amigo', 'juanito', 'N'));
     await this.guardarUsuario(Usuario.getUsuario('cfuentes@duocuc.cl', 'asdf', 'Carla', 'Fuentes', 'Dónde nació mamá', 'valparaiso', 'N'));
-    await this.guardarUsuario(Usuario.getUsuario('admin@duocuc.cl', '1234', 'admin', '', 'Dónde nació mamá', 'valparaiso', 'N'));
+    await this.guardarUsuario(Usuario.getUsuario('admin', '1234', 'admin', '', 'Animal Fav', 'Gato', 'N'));
   }
 
   // Create y Update del CRUD. La creación y actualización de un usuario
@@ -107,4 +107,22 @@ export class DataBaseService {
     await this.db.run(sql, [sesionActiva, correo]);
     await this.leerUsuarios();
   }
+
+  async eliminarUsuario(usuario: Usuario) {
+    const sql = 'DELETE FROM USUARIO WHERE correo=?;';
+    await this.db.run(sql, [usuario.correo]);
+    await this.leerUsuarios();
+  }
+
+  async traerListaUsuarios(): Promise<Usuario[]> {
+    try {
+      const usuarios: Usuario[] = (await this.db.query('SELECT * FROM USUARIO;')).values as Usuario[];
+      console.log(usuarios, 'LeerUsuarios');
+      return usuarios;
+    } catch (error) {
+      console.error('Error al obtener usuarios', error);
+      throw error;
+    }
+  }
+
 }

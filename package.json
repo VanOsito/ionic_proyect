@@ -1,5 +1,5 @@
 {
-  "name": "registroapp",
+  "name": "package.json",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -79,5 +79,7 @@
   "description": "An Ionic project",
   "jshintConfig": {
     "esversion": 6
-  }
+  },
+  "main": "karma.conf.js",
+  "license": "ISC"
 }

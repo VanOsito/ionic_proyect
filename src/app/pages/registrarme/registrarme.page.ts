@@ -53,7 +53,7 @@ export class RegistrarmePage implements OnInit {
     }
     this.bd.guardarUsuario(this.usuario);
     this.authService.setUsuarioAutenticado(this.usuario);
-    showToast('Sus datos fueron actualizados');
+    showToast('Ha sido registrado correctamente');
 
   }
 

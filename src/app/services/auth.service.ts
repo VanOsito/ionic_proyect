@@ -10,6 +10,9 @@ import { DataBaseService } from './data-base.service';
 @Injectable()
 
 export class AuthService {
+  eliminarUsuario(usuario: Usuario) {
+    throw new Error('Method not implemented.');
+  }
   
   keyUsuario = 'USUARIO_AUTENTICADO';
   usuarioAutenticado = new BehaviorSubject<Usuario | null>(null);
@@ -85,8 +88,6 @@ export class AuthService {
   transmitirContraseña(contraseña: string) {
     this.contraseñaSubject.next(contraseña);
   }
-
-
 }
 
 
